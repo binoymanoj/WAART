@@ -10,15 +10,33 @@ Waart is a simple Bash script designed for basic automated web reconnaissance du
 ## Usage
 
 ### Installation
-1. git clone 
-2. Make the script executable: `chmod +x bard.sh`
+1. clone the repository
+   ```bash
+   git clone https://github.com/binoymanoj/WAART.git
+   ```
+2. go to WAART repository
+   ```bash
+   cd WAART
+   ```
+3. Make the script executable and run
+   ```bash
+   chmod +x install.sh && sudo ./install.sh
+   ```
 
 ### Options
 - `-h, --help`: Show the help menu.
-- `-s, --scan`: Perform basic web reconnaissance.
+- `-t, --target`: // need to update this section !important
 
 ### Examples
-1. Perform basic web reconnaissance:
+1. Perform reconnaissance on one target:
    ```bash
-   ./bard.sh example.com
+   waart https://example.com
+   ```
+   or
+   ```bash
+   waart -t https://example.com
+   ```
+2. Perform reconnaissance on multiple target:
+   ```bash
+   waart -l domains.txt
    ```
