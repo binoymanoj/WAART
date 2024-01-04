@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# sed 's/^https\?:\/\///; s/\/$//' domainswithhttp.txt > newfile.txt
+
 show_help() {
-    echo "BART - Automated Web Recon Tool"
+    echo "WAART - Automated Web Recon Tool"
     echo
-    echo "Usage: ./bart.sh [OPTIONS] TARGET"
+    echo "Usage: ./waart.sh [OPTIONS] TARGET"
     echo
     echo "Options:"
     echo "  -h, --help     Show this help menu"
@@ -11,14 +13,14 @@ show_help() {
     echo "  -l, --list     Perform reconnaissance on multiple targets"
     echo 
     echo "Examples:"
-    echo "  ./bart.sh -u https://domain.com/"
-    echo "  ./bart.sh -l domains.txt"
+    echo "  ./waart.sh -u https://domain.com/"
+    echo "  ./waart.sh -l domains.txt"
 }
 
 perform_recon() {
 
-    figlet BART
-    echo -e "BART - Binoy's Automated Recon Tool\n"
+    figlet WAART
+    echo -e "WAART - Web Application Automated Recon Tool \n"
 
     sleep 1
 

@@ -1,6 +1,6 @@
-# Bard - Automated Web Recon Tool
+# WAART - Web Application Automated Recon Tool
 
-Bard is a simple Bash script designed for basic automated web reconnaissance during penetration testing. It includes options for performing various reconnaissance tasks on a specified target.
+Waart is a simple Bash script designed for basic automated web reconnaissance during penetration testing. It includes options for performing various reconnaissance tasks on a specified target(s).
 
 ## Features
 - Basic web reconnaissance using customizable commands.
@@ -9,12 +9,8 @@ Bard is a simple Bash script designed for basic automated web reconnaissance dur
 
 ## Usage
 
-### Prerequisites
-- Bash shell
-- Required reconnaissance tools (e.g., curl, nmap, nikto, dirb, etc.)
-
 ### Installation
-1. Download the `bard.sh` script.
+1. git clone 
 2. Make the script executable: `chmod +x bard.sh`
 
 ### Options

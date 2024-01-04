@@ -1,13 +1,13 @@
 #!/bin/bash
 
-figlet BART
-echo -e "BART - Binoy's Automated Recon Tool\n"
+figlet WAART
+echo -e "WAART - Web Application Automated Recon Tool \n"
 
 sleep 2
 
 echo -e "Automated Recon Tool by Binoy Manoj\n"
 
-
+sed 's/^https\?:\/\///; s/\/$//' domainswithhttp.txt > newfile.txt
 
 # Check for the number of arguments
 if [ "$#" -lt 1 ]; then
