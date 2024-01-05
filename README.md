@@ -34,9 +34,9 @@ Waart is a simple Bash script designed for basic automated web reconnaissance du
    ```
    or
    ```bash
-   waart -t https://example.com
+   waart -u https://example.com
    ```
 2. Perform reconnaissance on multiple target:
    ```bash
-   waart -l domains.txt
+   waart -t domains.txt
    ```
