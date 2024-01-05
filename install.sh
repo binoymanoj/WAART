@@ -6,11 +6,6 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# Install aquatone
-# echo "[*] Installing aquatone..."
-# go get github.com/michenriksen/aquatone
-
-# Ensure the required tools are installed
 echo "[*] Checking and installing required tools..."
 
 tools=("figlet" "nmap" "theHarvester" "wig" "whatweb" "dirb" "nikto" "ffuf" "gobuster" "sublist3r" "amass" "nuclei" "eyewitness" "httprobe")
@@ -22,5 +17,15 @@ for tool in "${tools[@]}"; do
     fi
 done
 
+cp waart.sh /usr/bin/waart
+
 # Display completion message
 echo "[*] WAART tool dependencies have been installed successfully!"
+echo 
+echo "[*] You have to download aquatone manually by:"
+echo 
+echo "[*] Step 1: Download the zip file from https://github.com/michenriksen/aquatone/releases"
+echo 
+echo "[*] Step 2: unzip the file"
+echo 
+echo "[*] Step 3: Move the aquatone file to bin directory by : sudo mv aquatone /usr/bin"
