@@ -61,6 +61,7 @@ perform_recon() {
         if [ -n "$IP_ADDR" ]; then
             IP_ADDR_FILE="ip_address.txt"
             echo "$IP_ADDR" > "$IP_ADDR_FILE"
+            sort ip_address.txt | uniq -d | tee ip_address.txt
             echo -e "[*] IP address stored in $IP_ADDR_FILE \n"
         else
             echo "Error: Unable to retrieve the IP address."
