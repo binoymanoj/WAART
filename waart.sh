@@ -8,11 +8,11 @@ show_help() {
     echo "Options:"
     echo "  -h, --help     Show this help menu"
     echo "  -u, --url      Perform reconnaissance on single target"
-    echo "  -l, --list     Perform reconnaissance on multiple targets"
+    # echo "  -l, --list     Perform reconnaissance on multiple targets"
     echo 
     echo "Examples:"
     echo "  waart -u https://domain.com/"
-    echo "  waart -l domains.txt"
+    # echo "  waart -l domains.txt"
 }
 
 perform_recon() {
@@ -22,7 +22,7 @@ perform_recon() {
     # Check if the URL starts with "http://" or "https://"
     if [[ "$URL" =~ ^http:// || "$URL" =~ ^https:// ]]; then
 
-        # Creating a directory for storing all Results
+        # Creating a directory for storing all Results generated from WAART
         mkdir WAART_results
         cd WAART_results
 
@@ -72,8 +72,8 @@ perform_recon() {
         if [ -n "$IP_ADDR" ]; then
             echo "[*] Performing basic Nmap scan on $IP_ADDR..."
             # x-terminal-emulator -e "bash -c 'nmap -p- -sV "$IP_ADDR" | tee -a nmap_scan_results/$DOMAIN_WOP.txt; echo Nmap scan completed; read -p PressEnter'"
-            nmap -p- -sV "$IP_ADDR" | tee -a nmap_$DOMAIN_WOP.txt
-            echo -e "\n [*] Nmap scan results stored in nmap_$DOMAIN_WOP.txt \n"  
+            nmap -p- -sV "$IP_ADDR" | tee -a nmap.txt
+            echo -e "\n [*] Nmap scan results stored in nmap.txt \n"  
         else
             echo "Error: Unable to retrieve the IP address for Nmap Scan."
         fi
@@ -81,9 +81,9 @@ perform_recon() {
         # 2. Perform Vuln Nmap scan
         if [ -n "$IP_ADDR" ]; then
             echo "[*] Performing Vuln Nmap scan on $IP_ADDR..."
-            nmap --script=vuln "$IP_ADDR" | tee -a nmap_vuln_$DOMAIN_WOP.txt
+            nmap --script=vuln "$IP_ADDR" | tee -a nmap_vuln.txt
             echo 
-            echo -e "[*] Nmap scan results stored in nmap_vuln_$DOMAIN_WOP.txt \n"  
+            echo -e "[*] Nmap scan results stored in nmap_vuln.txt \n"  
         else
             echo "Error: Unable to retrieve the IP address for Nmap Vuln Scan."
         fi
@@ -91,9 +91,9 @@ perform_recon() {
         # 3. Perform Nuclei scan
         if [ -n "$DOMAIN_FILE" ]; then
             echo "[*] Performing Nuclei scan on $DOMAIN"
-            nuclei -l $DOMAIN_FILE | tee -a nuclei_$DOMAIN_WOP.txt
+            nuclei -l $DOMAIN_FILE | tee -a nuclei.txt
             # wait
-            echo -e "[*] Nuclei scan results stored in nuclei_$DOMAIN_WOP.txt \n" 
+            echo -e "[*] Nuclei scan results stored in nuclei.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for Nuclei Scan."
         fi
@@ -101,8 +101,8 @@ perform_recon() {
         # 4. Perform theHarvester scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing theHarvester scan on $DOMAIN ..."
-            theHarvester -d $DOMAIN -b all | tee -a harvester_$DOMAIN_WOP.txt
-            echo -e "[*] theHarvester scan results stored in theHarvester_$DOMAIN_WOP.txt \n" 
+            theHarvester -d $DOMAIN -b all | tee -a harvester.txt
+            echo -e "[*] theHarvester scan results stored in harvester.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for theHarvester Scan."
         fi
@@ -110,8 +110,8 @@ perform_recon() {
         # 5. Perform wig scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing wig scan on $DOMAIN ..."
-            wig -d $DOMAIN | tee -a wig_$DOMAIN_WOP.txt
-            echo -e "[*] wig scan results stored in wig_$DOMAIN_WOP.txt \n" 
+            wig -d $DOMAIN | tee -a wig.txt
+            echo -e "[*] wig scan results stored in wig.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for wig Scan."
         fi
@@ -119,8 +119,8 @@ perform_recon() {
         # 6. Perform whatweb scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing whatweb scan on $DOMAIN ..."
-            whatweb $DOMAIN | tee -a whatweb_$DOMAIN_WOP.txt
-            echo -e "[*] whatweb scan results stored in whatweb_$DOMAIN_WOP.txt \n" 
+            whatweb $DOMAIN | tee -a whatweb.txt
+            echo -e "[*] whatweb scan results stored in whatweb.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for whatweb Scan."
         fi
@@ -128,8 +128,8 @@ perform_recon() {
         # 7. Perform dirb scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing dirb scan on $DOMAIN ..."
-            dirb $DOMAIN -w | tee -a dirb_$DOMAIN_WOP.txt
-            echo -e "[*] dirb scan results stored in dirb_$DOMAIN_WOP.txt \n" 
+            dirb $DOMAIN -w | tee -a dirb.txt
+            echo -e "[*] dirb scan results stored in dirb.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for dirb Scan."
         fi
@@ -137,8 +137,8 @@ perform_recon() {
         # 8. Perform nikto scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing nikto scan on $DOMAIN ..."
-            nikto -h $DOMAIN | tee -a nikto_$DOMAIN_WOP.txt
-            echo -e "[*] nikto scan results stored in nikto_$DOMAIN_WOP.txt \n" 
+            nikto -h $DOMAIN | tee -a nikto.txt
+            echo -e "[*] nikto scan results stored in nikto.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for nikto Scan."
         fi
@@ -146,8 +146,8 @@ perform_recon() {
         # 9. Perform ffuf scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing ffuf scan on $DOMAIN ..."
-            ffuf -w /usr/share/wordlists/dirb/common.txt -u "$DOMAIN/FUZZ" | tee -a ffuf_$DOMAIN_WOP.txt
-            echo -e "[*] ffuf scan results stored in ffuf_$DOMAIN_WOP.txt \n" 
+            ffuf -w /usr/share/wordlists/dirb/common.txt -u "$DOMAIN/FUZZ" | tee -a ffuf.txt
+            echo -e "[*] ffuf scan results stored in ffuf.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for ffuf Scan."
         fi
@@ -155,9 +155,9 @@ perform_recon() {
         # 10. Perform gobuster scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing gobuster scan on $DOMAIN ..."
-            # gobuster dir -u "$DOMAIN" -w /usr/share/wordlists/dirb/common.txt | tee -a gobuster_$DOMAIN_WOP.txt
-            gobuster dir -u "$DOMAIN" -w /usr/share/wordlists/dirb/common.txt > "gobuster_$DOMAIN_WOP.txt"
-            echo -e "[*] gobuster scan results stored in gobuster_$DOMAIN_WOP.txt \n" 
+            # gobuster dir -u "$DOMAIN" -w /usr/share/wordlists/dirb/common.txt | tee -a gobuster.txt
+            gobuster dir -u "$DOMAIN" -w /usr/share/wordlists/dirb/common.txt > "gobuster.txt"
+            echo -e "[*] gobuster scan results stored in gobuster.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for gobuster Scan."
         fi
@@ -165,8 +165,8 @@ perform_recon() {
         # 11. Perform httprobe scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing httprobe scan on $DOMAIN ..."
-            cat "gobuster_$DOMAIN_WOP.txt" | grep -oP "(?<=^$target)[^/]*" | sort -u | httprobe > "httprobe_$DOMAIN_WOP.txt"
-            echo -e "[*] httprobe scan results stored in httprobe_$DOMAIN_WOP.txt \n" 
+            cat "gobuster.txt" | grep -oP "(?<=^$target)[^/]*" | sort -u | httprobe > "httprobe.txt"
+            echo -e "[*] httprobe scan results stored in httprobe.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for httprobe Scan."
         fi
@@ -174,8 +174,8 @@ perform_recon() {
         # 12. Perform sublist3r scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing sublist3r scan on $DOMAIN ..."
-            sublist3r -d "$DOMAIN" | tee -a sublist3r_$DOMAIN_WOP.txt
-            echo -e "[*] sublist3r scan results stored in sublist3r_$DOMAIN_WOP.txt \n" 
+            sublist3r -d "$DOMAIN" | tee -a sublist3r.txt
+            echo -e "[*] sublist3r scan results stored in sublist3r.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for sublist3r Scan."
         fi
@@ -183,8 +183,8 @@ perform_recon() {
         # 13. Perform amass scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing amass scan on $DOMAIN ..."
-            amass enum -d "$DOMAIN" | tee -a amass_$DOMAIN_WOP.txt
-            echo -e "[*] amass scan results stored in amass_$DOMAIN_WOP.txt \n" 
+            amass enum -d "$DOMAIN" | tee -a amass.txt
+            echo -e "[*] amass scan results stored in amass.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for amass Scan."
         fi
@@ -192,8 +192,8 @@ perform_recon() {
         # 14. Perform aquatone scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing aquatone scan on $DOMAIN ..."
-            cat "httprobe_$DOMAIN_WOP.txt" | aquatone -out "aquatone_results"
-            echo -e "[*] aquatone scan results stored in aquatone_$DOMAIN_WOP.txt \n" 
+            cat "httprobe.txt" | aquatone -out "aquatone_results"
+            echo -e "[*] aquatone scan results stored in aquatone.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for aquatone Scan."
         fi
@@ -201,11 +201,69 @@ perform_recon() {
         # 15. Perform eyewitness scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing eyewitness scan on $DOMAIN ..."
-            eyewitness -f "httprobe_$DOMAIN_WOP.txt" --no-prompt -d "eyewitness_results"
-            echo -e "[*] eyewitness scan results stored in eyewitness_$DOMAIN_WOP.txt \n" 
+            eyewitness -f "httprobe.txt" --no-prompt -d "eyewitness_results"
+            echo -e "[*] eyewitness scan results stored in eyewitness.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for eyewitness Scan."
         fi
+
+        # 16. Perform joomscan
+        if [ -n "$DOMAIN" ]; then
+            echo "[*] Performing joomscan on $DOMAIN ..."
+            joomscan -u "$DOMAIN" | tee -a joomscan.txt
+            echo -e "[*] joomscan results stored in joomscan.txt \n" 
+        else
+            echo "Error: Unable to retrieve the Domain for joomscan."
+        fi
+
+        # 17. Perform wapiti scan
+        mkdir wapiti_results
+        if [ -n "$DOMAIN" ]; then
+            echo "[*] Performing wapiti scan on $DOMAIN ..."
+            wapiti -u "$DOMAIN" -o wapiti_results/
+            echo -e "[*] wapiti scan results stored in wapiti_results folder \n" 
+        else
+            echo "Error: Unable to retrieve the Domain for wapiti Scan."
+        fi    
+
+        # 18. Perform wpscan scan
+        if [ -n "$DOMAIN" ]; then
+            echo "[*] Performing wpscan on $DOMAIN ..."
+            wpscan --url "$DOMAIN" | tee -a wpscan.txt
+            echo -e "[*] wpscan results stored in wpscan.txt \n" 
+        else
+            echo "Error: Unable to retrieve the Domain for wpscan."
+        fi
+
+        # 19. Perform hakrawler scan
+        if [ -n "$DOMAIN" ]; then
+            echo "[*] Performing hakrawler scan on $DOMAIN ..."
+            cat "$DOMAIN" | hakrawler | tee -a hakrawler.txt
+            echo -e "[*] hakrawler scan results stored in hakrawler.txt \n" 
+        else
+            echo "Error: Unable to retrieve the Domain for hakrawler Scan."
+        fi
+
+        # 20. Perform dirsearch scan
+        if [ -n "$DOMAIN" ]; then
+            echo "[*] Performing dirsearch scan on $DOMAIN ..."
+            dirsearch -u "$DOMAIN" | tee -a dirsearch.txt
+            echo -e "[*] dirsearch scan results stored in dirsearch.txt \n" 
+        else
+            echo "Error: Unable to retrieve the Domain for dirsearch Scan."
+        fi
+
+        # 21. Perform assetfinder scan
+        if [ -n "$DOMAIN_WOP" ]; then
+            echo "[*] Performing assetfinder scan on $DOMAIN_WOP ..."
+            assetfinder -subs-only ."$DOMAIN_WOP" | tee -a assetfinder.txt
+            echo -e "[*] assetfinder scan results stored in assetfinder.txt \n" 
+        else
+            echo "Error: Unable to retrieve the Domain for assetfinder Scan."
+        fi
+
+        echo
+        echo "[*] All the Scans are completed & the results are stored in WAART_results folder"
 
     else
         echo "Error: Invalid URL format. Please include 'http://' or 'https://' in the URL."
@@ -258,7 +316,7 @@ while [ "$#" -gt 0 ]; do
             perform_recon "$2"
             exit 0
             ;;
-        -t|--target)
+        -l|--list)
             perform_target_recon "$2"
             exit 0
             ;;

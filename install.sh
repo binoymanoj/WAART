@@ -8,7 +8,7 @@ fi
 
 echo "[*] Checking and installing required tools..."
 
-tools=("figlet" "nmap" "theHarvester" "wig" "whatweb" "dirb" "nikto" "ffuf" "gobuster" "sublist3r" "amass" "nuclei" "eyewitness" "httprobe")
+tools=("figlet" "nmap" "theHarvester" "wig" "whatweb" "dirb" "nikto" "ffuf" "gobuster" "sublist3r" "amass" "nuclei" "eyewitness" "httprobe" "joomscan" "wapiti" "wpscan" "hakrawler" "dirsearch" "assetfinder")
 
 for tool in "${tools[@]}"; do
     if ! command -v "$tool" &> /dev/null; then
