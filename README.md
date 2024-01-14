@@ -25,7 +25,7 @@ Waart is a simple Bash script designed for basic automated web reconnaissance du
 
 ### Options
 - `-h, --help`: Show the help menu.
-- `-t, --target`: // need to update this section !important
+- `-u, --url`: // need to update this section !important
 
 ### Examples
 Perform reconnaissance on one target:
