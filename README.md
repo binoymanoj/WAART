@@ -28,7 +28,7 @@ Waart is a simple Bash script designed for basic automated web reconnaissance du
 - `-t, --target`: // need to update this section !important
 
 ### Examples
-1. Perform reconnaissance on one target:
+Perform reconnaissance on one target:
    ```bash
    waart https://example.com
    ```
@@ -36,7 +36,7 @@ Waart is a simple Bash script designed for basic automated web reconnaissance du
    ```bash
    waart -u https://example.com
    ```
-2. Perform reconnaissance on multiple target:
+<!-- 2. Perform reconnaissance on multiple target:
    ```bash
    waart -t domains.txt
-   ```
+   ``` -->

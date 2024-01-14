@@ -73,8 +73,9 @@ perform_recon() {
         if [ -n "$IP_ADDR" ]; then
             echo "[*] Performing basic Nmap scan on $IP_ADDR..."
             # x-terminal-emulator -e "bash -c 'nmap -p- -sV "$IP_ADDR" | tee -a nmap_scan_results/$DOMAIN_WOP.txt; echo Nmap scan completed; read -p PressEnter'"
-            nmap -p- -sV "$IP_ADDR" | tee -a nmap.txt
-            echo -e "\n [*] Nmap scan results stored in nmap.txt \n"  
+            nmap -p- -sV $IP_ADDR | tee -a nmap.txt
+            echo 
+            echo -e "[*] Nmap scan results stored in nmap.txt \n"  
         else
             echo "Error: Unable to retrieve the IP address for Nmap Scan."
         fi
@@ -82,7 +83,7 @@ perform_recon() {
         # 2. Perform Vuln Nmap scan
         if [ -n "$IP_ADDR" ]; then
             echo "[*] Performing Vuln Nmap scan on $IP_ADDR..."
-            nmap --script=vuln "$IP_ADDR" | tee -a nmap_vuln.txt
+            nmap --script=vuln $IP_ADDR | tee -a nmap_vuln.txt
             echo 
             echo -e "[*] Nmap scan results stored in nmap_vuln.txt \n"  
         else
@@ -147,7 +148,7 @@ perform_recon() {
         # 9. Perform ffuf scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing ffuf scan on $DOMAIN ..."
-            ffuf -w /usr/share/wordlists/dirb/common.txt -u "$DOMAIN/FUZZ" | tee -a ffuf.txt
+            ffuf -w /usr/share/wordlists/dirb/common.txt -u $DOMAIN/FUZZ | tee -a ffuf.txt
             echo -e "[*] ffuf scan results stored in ffuf.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for ffuf Scan."
@@ -157,7 +158,7 @@ perform_recon() {
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing gobuster scan on $DOMAIN ..."
             # gobuster dir -u "$DOMAIN" -w /usr/share/wordlists/dirb/common.txt | tee -a gobuster.txt
-            gobuster dir -u "$DOMAIN" -w /usr/share/wordlists/dirb/common.txt > "gobuster.txt"
+            gobuster dir -u $DOMAIN -w /usr/share/wordlists/dirb/common.txt > "gobuster.txt"
             echo -e "[*] gobuster scan results stored in gobuster.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for gobuster Scan."
@@ -166,7 +167,7 @@ perform_recon() {
         # 11. Perform httprobe scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing httprobe scan on $DOMAIN ..."
-            cat "gobuster.txt" | grep -oP "(?<=^$target)[^/]*" | sort -u | httprobe > "httprobe.txt"
+            cat "gobuster.txt" | grep -oP "(?<=^$DOMAIN)[^/]*" | sort -u | httprobe > "httprobe.txt"
             echo -e "[*] httprobe scan results stored in httprobe.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for httprobe Scan."
@@ -175,7 +176,7 @@ perform_recon() {
         # 12. Perform sublist3r scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing sublist3r scan on $DOMAIN ..."
-            sublist3r -d "$DOMAIN" | tee -a sublist3r.txt
+            sublist3r -d $DOMAIN | tee -a sublist3r.txt
             echo -e "[*] sublist3r scan results stored in sublist3r.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for sublist3r Scan."
@@ -184,7 +185,7 @@ perform_recon() {
         # 13. Perform amass scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing amass scan on $DOMAIN ..."
-            amass enum -d "$DOMAIN" | tee -a amass.txt
+            amass enum -d $DOMAIN | tee -a amass.txt
             echo -e "[*] amass scan results stored in amass.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for amass Scan."
@@ -211,7 +212,7 @@ perform_recon() {
         # 16. Perform joomscan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing joomscan on $DOMAIN ..."
-            joomscan -u "$DOMAIN" | tee -a joomscan.txt
+            joomscan -u $DOMAIN | tee -a joomscan.txt
             echo -e "[*] joomscan results stored in joomscan.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for joomscan."
@@ -221,7 +222,7 @@ perform_recon() {
         mkdir wapiti_results
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing wapiti scan on $DOMAIN ..."
-            wapiti -u "$DOMAIN" -o wapiti_results/
+            wapiti -u $DOMAIN -o wapiti_results/
             echo -e "[*] wapiti scan results stored in wapiti_results folder \n" 
         else
             echo "Error: Unable to retrieve the Domain for wapiti Scan."
@@ -230,7 +231,7 @@ perform_recon() {
         # 18. Perform wpscan scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing wpscan on $DOMAIN ..."
-            wpscan --url "$DOMAIN" | tee -a wpscan.txt
+            wpscan --url $DOMAIN | tee -a wpscan.txt
             echo -e "[*] wpscan results stored in wpscan.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for wpscan."
@@ -239,7 +240,7 @@ perform_recon() {
         # 19. Perform hakrawler scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing hakrawler scan on $DOMAIN ..."
-            cat "$DOMAIN" | hakrawler | tee -a hakrawler.txt
+            cat $DOMAIN_FILE | hakrawler | tee -a hakrawler.txt
             echo -e "[*] hakrawler scan results stored in hakrawler.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for hakrawler Scan."
@@ -248,7 +249,7 @@ perform_recon() {
         # 20. Perform dirsearch scan
         if [ -n "$DOMAIN" ]; then
             echo "[*] Performing dirsearch scan on $DOMAIN ..."
-            dirsearch -u "$DOMAIN" | tee -a dirsearch.txt
+            dirsearch -u $DOMAIN | tee -a dirsearch.txt
             echo -e "[*] dirsearch scan results stored in dirsearch.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for dirsearch Scan."
@@ -257,7 +258,7 @@ perform_recon() {
         # 21. Perform assetfinder scan
         if [ -n "$DOMAIN_WOP" ]; then
             echo "[*] Performing assetfinder scan on $DOMAIN_WOP ..."
-            assetfinder -subs-only ."$DOMAIN_WOP" | tee -a assetfinder.txt
+            assetfinder -subs-only $DOMAIN_WOP | tee -a assetfinder.txt
             echo -e "[*] assetfinder scan results stored in assetfinder.txt \n" 
         else
             echo "Error: Unable to retrieve the Domain for assetfinder Scan."
