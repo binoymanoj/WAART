@@ -8,7 +8,7 @@ fi
 
 echo "[*] Checking and installing required tools..."
 
-tools=("figlet" "nmap" "theHarvester" "wig" "whatweb" "dirb" "nikto" "ffuf" "gobuster" "sublist3r" "amass" "subfinder" "nuclei" "eyewitness" "httprobe" "joomscan" "wapiti" "wpscan" "hakrawler" "dirsearch" "assetfinder" "golang-go")
+tools=("figlet" "nmap" "theHarvester" "wig" "whatweb" "dirb" "nikto" "ffuf" "gobuster" "sublist3r" "amass" "subfinder" "nuclei" "eyewitness" "httprobe" "joomscan" "wapiti" "wpscan" "hakrawler" "dirsearch" "assetfinder")
 
 failed_tools=()
 
