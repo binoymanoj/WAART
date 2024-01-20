@@ -8,7 +8,7 @@ fi
 
 echo "[*] Checking and installing required tools..."
 
-tools=("figlet" "nmap" "theHarvester" "wig" "whatweb" "dirb" "nikto" "ffuf" "gobuster" "sublist3r" "amass" "nuclei" "eyewitness" "httprobe" "joomscan" "wapiti" "wpscan" "hakrawler" "dirsearch" "assetfinder")
+tools=("figlet" "nmap" "theHarvester" "wig" "whatweb" "dirb" "nikto" "ffuf" "gobuster" "sublist3r" "amass" "subfinder" "nuclei" "eyewitness" "httprobe" "joomscan" "wapiti" "wpscan" "hakrawler" "dirsearch" "assetfinder" "golang-go")
 
 failed_tools=()
 
@@ -37,6 +37,12 @@ if [ ${#failed_tools[@]} -gt 0 ]; then
     exit 1
 fi
 
+# installation of subzy tool
+go install -v github.com/LukaSikic/subzy@latest
+
+sudo cp ~/go/bin/subzy /bin
+
+# coping the tool to bin directory for accessing anywhere in the terminal
 cp waart.sh /usr/bin/waart
 
 # Display completion message
