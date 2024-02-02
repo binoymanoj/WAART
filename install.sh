@@ -14,7 +14,7 @@ failed_tools=()
 
 for tool in "${tools[@]}"; do
     if ! command -v "$tool" &> /dev/null; then
-        read -p "[*] $tool is not installed. Press Enter to install it..."
+        echo "[*] $tool is not installed. Installing $tool"
         echo "[*] Installing $tool..."
         apt-get install -y "$tool"  # Package manager changes upon system. This command works for Debian-based systems. Modify for other package managers
         # Check if the installation was successful
